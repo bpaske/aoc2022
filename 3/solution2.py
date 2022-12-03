@@ -1,6 +1,5 @@
 total = 0
 with open('./input.txt') as f:
-    rucksack = 0
     for lines in zip(f, f, f):
         shared_items = set.intersection(*[set(l.strip()) for l in lines])
         for shared_item in shared_items:
