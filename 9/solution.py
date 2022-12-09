@@ -8,27 +8,21 @@ class Position(NamedTuple):
 
 
 def update_knots(knots: List[Position]):
-    for i in range(len(knots) - 1):
-        head_position = knots[i]
-        tail_position = knots[i + 1]
+    for i, (head, tail) in enumerate(zip(knots, knots[1:]), 1):
 
-        x_diff = head_position.x - tail_position.x
-        y_diff = head_position.y - tail_position.y
+        x_diff = head.x - tail.x
+        y_diff = head.y - tail.y
 
         if abs(x_diff) == 2 and abs(y_diff) == 2:
-            tail_position = Position(
-                tail_position.x + x_diff // 2,
-                tail_position.y + y_diff // 2,
+            tail = Position(
+                tail.x + x_diff // 2,
+                tail.y + y_diff // 2,
             )
         elif abs(y_diff) == 2:
-            tail_position = Position(
-                tail_position.x + x_diff, tail_position.y + y_diff // 2
-            )
+            tail = Position(tail.x + x_diff, tail.y + y_diff // 2)
         elif abs(x_diff) == 2:
-            tail_position = Position(
-                tail_position.x + x_diff // 2, tail_position.y + y_diff
-            )
-        knots[i + 1] = tail_position
+            tail = Position(tail.x + x_diff // 2, tail.y + y_diff)
+        knots[i] = tail
 
 
 moves: Dict[str, Callable[[Position], Position]] = {
